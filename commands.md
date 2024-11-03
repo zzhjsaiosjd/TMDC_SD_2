@@ -11,7 +11,7 @@ python eval_prob_adaptive.py --dataset food --split test --n_trials 1 \
 python eval_prob_adaptive_finetuned.py --dataset cifar10 --split test --n_trials 1 \
   --to_keep 5 1 --n_samples 50 500 --loss l1 \
   --prompt_path prompts/cifar10_prompts.csv \
-  --adv AUTO --checkpoint_step 100 \
+  --adv AUTO --checkpoint_step 100  --net_path ./resnet50.pt \
   --auto_type plus
 ```
 

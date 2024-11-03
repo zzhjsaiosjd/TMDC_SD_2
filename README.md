@@ -45,3 +45,21 @@ accelerate launch --mixed_precision="no" train_text_to_image_lora.py \
 ```
 
 Here, MODEL_NAME is the save directory of the pre-trained Stable Diffusion model, ADV_NET_PATH is the save directory of the pre-trained Resnet50 model, and ATTACK_TYPE is the selected adversarial attack type, which can be 'FGSM', 'PGD' and 'AUTO'
+
+
+
+#### Run Evaluation
+
+``` bash
+python eval_prob_adaptive_finetuned.py --dataset cifar10 --split test --n_trials 1 \
+  --to_keep 5 1 --n_samples 50 500 --loss l1 \
+  --prompt_path prompts/cifar10_prompts.csv \
+  --adv AUTO --checkpoint_step 100  --net_path ./resnet50.pt \
+  --auto_type plus
+```
+
+run the command above to evaluate the accuracy under adversarial attack on the test set.
+
+Here, `--dataset` is the dataset we choose, `--loss` is the choice of the type of loss to use when calculating the loss of diffusion model, `--adv` is the choice of the type of attack, which can be 'FGSM', 'PGD' and 'AUTO', `--net_path` is the root of the pre-trained resnet50 model and `--checkpoint_step` refers to the checkpoint you want to load.
+
+We set the root directory for checkpoints in the project. When you run the code yourself, you need to go to `/diffusion/models.py` to modify **MODEL_IDS** and **MODEL_IDS_CHECK**. MODEL_IDS stores the save path of the pre-trained SD2, and MODEL_IDS_CHECK stores the path of the fine-tuned diffusion model.
